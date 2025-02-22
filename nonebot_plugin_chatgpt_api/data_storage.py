@@ -13,7 +13,7 @@ from .utils import create_dir, find_files, load_jsonl
 def save_api_call_stat_to_jsonl(user_id: str, stat: Dict[str, Any]):
     """添加 API 调用统计信息到 JSONL 文件"""
     save_dir = os.path.join(PLUGIN_CONFIG.chatgpt_log_path, "api_call_stats", user_id)
-    save_file = os.path.join(save_dir, f"{time.strftime("%Y-%m-%d")}.jsonl")
+    save_file = os.path.join(save_dir, f"{time.strftime('%Y-%m-%d')}.jsonl")
 
     create_dir(save_dir)
 
