@@ -77,6 +77,7 @@ _✨ ChatGPT API 交互插件 ✨_
 |:----------------------------:|:--:|:-------------------------------:|:-----------------------------:|
 |       chatgpt_api_key        | 是  |                                 |      OpenAI API 的 API 密钥      |
 |       chatgpt_base_url       | 否  |              None               | OpenAI API 基础 URL（如果需要配置反向代理） |
+|    chatgpt_http_proxy_url    | 否  |              None               |           HTTP 代理地址           |
 |        chatgpt_model         | 否  |             gpt-4o              |        使用的 ChatGPT 模型         |
 |       chatgpt_bot_name       | 否  |             ChatGPT             |      机器人的名称，在一些特定的回复中会用到      |
 |  chatgpt_gen_args_json_file  | 否  |              None               |        生成参数的 JSON 文件路径        |

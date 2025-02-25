@@ -1,6 +1,7 @@
 import time
 from typing import Any, Dict, List, Optional
 
+import httpx
 from nonebot.log import logger
 from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletion
@@ -16,7 +17,8 @@ class ChatGPT:
     def __init__(
         self,
         api_key: str,
-        base_url: str = "https://chat.openai.com/",
+        base_url: Optional[str] = None,
+        http_proxy_url: Optional[str] = None,
         max_retries: int = 3,
         model: str = "gpt-4o",
         system_prompt: str = "",
@@ -24,7 +26,12 @@ class ChatGPT:
         **gen_args,
     ) -> None:
         logger.debug("Creating ChatGPT instance...")
-        self.client = AsyncOpenAI(api_key=api_key, base_url=base_url, max_retries=max_retries)
+        self.client = AsyncOpenAI(
+            api_key=api_key,
+            base_url=base_url,
+            http_client=httpx.Client(proxy=http_proxy_url) if http_proxy_url else None,
+            max_retries=max_retries,
+        )
         self.model = model
         self.system_prompt = system_prompt if isinstance(system_prompt, str) else ""
         self.chat_history = chat_history if isinstance(chat_history, list) else []

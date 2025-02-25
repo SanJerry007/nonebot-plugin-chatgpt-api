@@ -13,7 +13,8 @@ class ChatGPTConfig(BaseModel):
     chatgpt_bot_name: str = "ChatGPT"  # 机器人的名称，在一些特定的回复中会用到
     chatgpt_model: str = "gpt-4o"
     chatgpt_api_key: str = None
-    chatgpt_base_url: str = None
+    chatgpt_base_url: Optional[str] = None
+    chatgpt_http_proxy_url: Optional[str] = None  # HTTP 代理地址
 
     chatgpt_gen_args_json_file: Optional[str] = None  # 生成参数的 JSON 文件路径，包含temperature等信息
     chatgpt_gen_args: Optional[dict] = None  # 具体的生成参数，优先级低于文件配置

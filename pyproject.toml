@@ -1,6 +1,6 @@
 [project]
 name = "nonebot-plugin-chatgpt-api"
-version = "1.0.3"
+version = "1.1.0"
 description = "NoneBot2 plugin for AI chat with OpenAI API."
 authors = [{ name = "SanJerry007", email = "sandy375408563@gmail.com" }]
 license = { text = "MIT" }
@@ -10,7 +10,8 @@ dependencies = [
     "nonebot-plugin-apscheduler>=0.5.0",
     "nonebot-plugin-htmlrender>=0.6.0",
     "openai>=1.2.4",
-    "pandas>=2.2.3"
+    "pandas>=2.2.3",
+    "httpx>=0.28.1"
 ]
 requires-python = ">=3.9"
 readme = "README.md"
