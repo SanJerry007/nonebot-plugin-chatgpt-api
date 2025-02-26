@@ -70,9 +70,11 @@ async def finish_chat_timeout(user_id, event, matcher, bot, respond=True):
         await bot.send(event, response_content, at_sender=True)
 
 
+LAST_TIME: Dict[Hashable, datetime.datetime] = {}
+
+
 def cooldown_checker(cd_time: datetime.timedelta) -> Any:
     """检查对话是否已经冷却"""
-    last_time: Dict[Hashable, datetime.datetime] = {}
 
     async def check_cooldown(event: Event, matcher: Matcher) -> AsyncGenerator[None, None]:
         if hasattr(event, "user_id"):
@@ -80,18 +82,21 @@ def cooldown_checker(cd_time: datetime.timedelta) -> Any:
         else:
             user_id = "GLOBAL"
 
-        if user_id not in last_time:
-            last_time[user_id] = datetime.datetime.now()
-            logger.debug(f"[Cooldown] User \"{user_id}\" (Newly created): last_time={last_time[user_id]}")
+        logger.debug(str(event))
+        yield
+
+        if user_id not in LAST_TIME:
+            LAST_TIME[user_id] = datetime.datetime.now()
+            logger.debug(f"[Cooldown] User \"{user_id}\" (Newly created): last_time={LAST_TIME[user_id]}")
         else:
-            event_time = event.time
-            cooldown_time = last_time[user_id] + cd_time
-            logger.debug(f"[Cooldown] User \"{user_id}\": last_time={last_time[user_id]}, event_time={event_time}, cooldown_time={cooldown_time}, cd_time={cd_time}")
+            event_time = datetime.datetime.fromtimestamp(event.time)
+            cooldown_time = LAST_TIME[user_id] + cd_time
+            logger.debug(f"[Cooldown] User \"{user_id}\": last_time={LAST_TIME[user_id]}, event_time={event_time}, cooldown_time={cooldown_time}, cd_time={cd_time}")
 
             if event_time < cooldown_time:
                 await matcher.finish(f"{PLUGIN_CONFIG.chatgpt_bot_name}冷却中，剩余{(cooldown_time - event_time).total_seconds():.0f}秒", at_sender=True)
             else:
-                last_time[user_id] = event.time
+                LAST_TIME[user_id] = event_time
         yield
 
     return Depends(check_cooldown)
