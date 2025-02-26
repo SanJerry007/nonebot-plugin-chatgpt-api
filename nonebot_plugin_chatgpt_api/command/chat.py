@@ -102,7 +102,7 @@ def cooldown_checker(cd_time: datetime.timedelta) -> Any:
     return Depends(check_cooldown)
 
 
-LAST_RESPONDED = {}  # 用户的上次对话是否已回复
+LAST_RESPONDED: Dict[Hashable, bool] = {}  # 用户的上次对话是否已回复
 
 
 def last_chat_finish_checker() -> Any:
@@ -121,7 +121,7 @@ def last_chat_finish_checker() -> Any:
     return Depends(check_responded)
 
 
-@matcher_chat.handle(parameterless=[cooldown_checker(PLUGIN_CONFIG.chatgpt_cd_time)])
+@matcher_chat.handle(parameterless=[cooldown_checker(PLUGIN_CONFIG.chatgpt_cd_time), last_chat_finish_checker()])
 async def handle_chat(event: Event, state: T_State, matcher: Matcher, bot: Bot) -> None:  # , message: Message = CommandArg()
     """进行聊天对话"""
     if hasattr(event, "user_id"):

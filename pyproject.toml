@@ -1,6 +1,6 @@
 [project]
 name = "nonebot-plugin-chatgpt-api"
-version = "1.1.1"
+version = "1.1.2"
 description = "NoneBot2 plugin for AI chat with OpenAI API."
 authors = [{ name = "SanJerry007", email = "sandy375408563@gmail.com" }]
 license = { text = "MIT" }
