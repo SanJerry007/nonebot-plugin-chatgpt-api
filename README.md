@@ -73,23 +73,23 @@ _✨ ChatGPT API 交互插件 ✨_
 
 在 nonebot2 项目的 `.env` 文件中添加下表中的必填配置：
 
-|             配置项              | 必填 |               默认值               |              说明               |
-|:----------------------------:|:--:|:-------------------------------:|:-----------------------------:|
-|       chatgpt_api_key        | 是  |                                 |      OpenAI API 的 API 密钥      |
-|       chatgpt_base_url       | 否  |              None               | OpenAI API 基础 URL（如果需要配置反向代理） |
-|    chatgpt_http_proxy_url    | 否  |              None               |           HTTP 代理地址           |
-|        chatgpt_model         | 否  |             gpt-4o              |        使用的 ChatGPT 模型         |
-|       chatgpt_bot_name       | 否  |             ChatGPT             |      机器人的名称，在一些特定的回复中会用到      |
-|  chatgpt_gen_args_json_file  | 否  |              None               |        生成参数的 JSON 文件路径        |
-|     chatgpt_return_image     | 否  |              False              |    是否将回复以 markdown 格式渲染为图片    |
-|       chatgpt_cd_time        | 否  |                5                |         聊天对话的冷却时间（秒）          |
-|  chatgpt_timeout_time_chat   | 否  |               10                |          聊天的超时时间（分钟）          |
-| chatgpt_timeout_time_setting | 否  |                5                |       与设置相关的命令的超时时间（分钟）       |
-|   chatgpt_timeout_respond    | 否  |              True               |           超时后是否自动回复           |
-|    chatgpt_log_api_stats     | 否  |              True               |        是否保存 API 调用统计信息        |
-|  chatgpt_log_system_prompt   | 否  |              True               |          是否保存系统提示词历史          |
-|   chatgpt_log_chat_history   | 否  |              True               |           是否保存对话历史            |
-|       chatgpt_log_path       | 否  | ~/.cache/chatgpt_api_call_stats |            日志保存路径             |
+|             配置项              | 必填 |       默认值        |           说明            |
+|:----------------------------:|:--:|:----------------:|:-----------------------:|
+|       chatgpt_api_key        | 是  |                  |      OpenAI API 密钥      |
+|       chatgpt_base_url       | 否  |       None       |   OpenAI API 调用的 URL    |
+|    chatgpt_http_proxy_url    | 否  |       None       |        HTTP 代理地址        |
+|        chatgpt_model         | 否  |      gpt-4o      |         调用的模型名称         |
+|       chatgpt_bot_name       | 否  |     ChatGPT      |    机器人的名称（用于一些特定回复）     |
+|  chatgpt_gen_args_json_file  | 否  |       None       |     生成参数的 JSON 文件路径     |
+|     chatgpt_return_image     | 否  |      False       | 是否将回复以 markdown 格式渲染为图片 |
+|       chatgpt_cd_time        | 否  |        5         |      聊天对话的冷却时间（秒）       |
+|  chatgpt_timeout_time_chat   | 否  |        10        |       聊天的超时时间（分钟）       |
+| chatgpt_timeout_time_setting | 否  |        5         |    与设置相关的命令的超时时间（分钟）    |
+|   chatgpt_timeout_respond    | 否  |       True       |        超时后是否自动回复        |
+|    chatgpt_log_api_stats     | 否  |       True       |    是否保存 API 调用统计信息日志    |
+|  chatgpt_log_system_prompt   | 否  |       True       |      是否保存系统提示词历史日志      |
+|   chatgpt_log_chat_history   | 否  |       True       |       是否保存对话历史日志        |
+|       chatgpt_log_path       | 否  | ~/.cache/nonebot |         日志保存路径          |
 
 ## 🎉 使用
 
