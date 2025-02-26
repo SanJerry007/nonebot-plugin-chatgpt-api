@@ -38,9 +38,7 @@ def chat_refresh_command_checker() -> Any:
         user_content = message.extract_plain_text().strip()
 
         # extract mode & content
-        extracted_user_content = user_content.split(" ")  # [@bot] "刷新"
-        if extracted_user_content[0].startswith("@"):
-            extracted_user_content = extracted_user_content[1:]  # "刷新"
+        extracted_user_content = user_content.split(" ")  # "刷新"
         if extracted_user_content[0] == "刷新":
             matcher.stop_propagation()  # verify that this is a prompt-related command, block the matcher
         else:

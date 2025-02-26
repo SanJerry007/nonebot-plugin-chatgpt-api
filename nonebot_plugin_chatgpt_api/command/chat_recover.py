@@ -40,9 +40,7 @@ def chat_recover_command_checker() -> Any:
         user_content = message.extract_plain_text().strip()
 
         # extract mode & content
-        extracted_user_content = user_content.split(" ")  # [@bot] "恢复"
-        if extracted_user_content[0].startswith("@"):
-            extracted_user_content = extracted_user_content[1:]  # "恢复"
+        extracted_user_content = user_content.split(" ")  # "恢复"
         if extracted_user_content[0] == "恢复":
             matcher.stop_propagation()  # verify that this is a prompt-related command, block the matcher
         else:

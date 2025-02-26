@@ -80,9 +80,7 @@ def system_prompt_command_checker() -> Any:
         user_content = message.extract_plain_text().strip()
 
         # extract mode & content
-        extracted_user_content = user_content.split(" ")  # [@bot] "提示词" [命令] [内容]
-        if extracted_user_content[0].startswith("@"):
-            extracted_user_content = extracted_user_content[1:]  # "提示词" [命令] [内容]
+        extracted_user_content = user_content.split(" ")  # "提示词" [命令] [内容]
         if extracted_user_content[0] == "提示词":
             matcher.stop_propagation()  # verify that this is a prompt-related command, block the matcher
         else:
@@ -108,9 +106,7 @@ async def handle_system_prompt(event: Event, state: T_State, matcher: Matcher, b
     logger.debug(f"Message type: {type(message)}")
 
     # extract `mode` & `content`
-    extracted_user_content = user_content.split(" ")  # [@bot] "提示词" [命令] [内容]
-    if extracted_user_content[0].startswith("@"):
-        extracted_user_content = extracted_user_content[1:]  # "提示词" [命令] [内容]
+    extracted_user_content = user_content.split(" ")  # "提示词" [命令] [内容]
     if extracted_user_content[0] == "提示词":
         extracted_user_content = extracted_user_content[1:]  # [命令] [内容]
     mode = extracted_user_content[0] if len(extracted_user_content) > 0 else None  # [命令] / None
@@ -120,21 +116,21 @@ async def handle_system_prompt(event: Event, state: T_State, matcher: Matcher, b
 
     # handle the command
     if mode is None:
-        # @bot "提示词"
+        # "提示词"
         # get the `mode` variable from `matcher.got()` function
         pass
     else:
         # set the `mode` for function `dispatch_system_prompt_operations`
         if mode == "查看":
-            # @bot "提示词" "查看"
+            # "提示词" "查看"
             matcher.set_arg("mode", message_type("查看"))
             matcher.set_arg("content", None)
         elif mode == "重置":
-            # @bot "提示词" "重置"
+            # "提示词" "重置"
             matcher.set_arg("mode", message_type("重置"))
             matcher.set_arg("content", None)
         elif mode == "更新":
-            # @bot "提示词" "更新" [内容]
+            # "提示词" "更新" [内容]
             matcher.set_arg("mode", message_type("更新"))
             # set the `content` for function `update_system_prompt`
             if len(extracted_user_content) > 1:
@@ -163,9 +159,7 @@ async def dispatch_system_prompt_operations(event: Event, matcher: Matcher, bot:
     logger.info(f"User \"{user_id}\" raw `mode`: {mode}")
 
     # extract `mode`
-    extracted_mode = mode.split(" ")  # [@bot] ["提示词"] 命令
-    if extracted_mode[0].startswith("@"):
-        extracted_mode = extracted_mode[1:]  # ["提示词"] 命令
+    extracted_mode = mode.split(" ")  # ["提示词"] 命令
     if extracted_mode[0] == "提示词":
         extracted_mode = extracted_mode[1:]  # 命令
     mode = extracted_mode[0]
@@ -219,9 +213,7 @@ async def update_system_prompt(event: Event, matcher: Matcher, content: str = Ar
     logger.info(f"User \"{user_id}\" raw `content`: {content}")
 
     # # extract `content`
-    # extracted_content = content.split(" ")  # [@bot] ["提示词"] ["更新"] 内容
-    # if extracted_content[0].startswith("@"):
-    #     extracted_content = extracted_content[1:]  # ["提示词"] ["更新"] 内容
+    # extracted_content = content.split(" ")  # ["提示词"] ["更新"] 内容
     # if extracted_content[0] == "提示词":
     #     extracted_content = extracted_content[1:]  # ["更新"] 内容
     # if extracted_content[0] == "更新":
