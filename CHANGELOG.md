@@ -1,9 +1,9 @@
 # 更新日志
 
-### v1.1.2 (latest)
 ### v1.1.3 (latest)
 
 - 清理了未使用的 `nonebot_plugin_saa` 依赖。
+- 完善插件 metadata 信息。
 
 ### v1.1.2
 

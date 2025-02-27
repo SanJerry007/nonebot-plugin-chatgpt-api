@@ -8,7 +8,7 @@
 
 # nonebot-plugin-chatgpt-api
 
-_✨ ChatGPT API 交互插件 ✨_
+_✨ ChatGPT (OpenAI API 接口版) ✨_
 
 <a href="./LICENSE">
     <img src="https://img.shields.io/github/license/SanJerry007/nonebot-plugin-chatgpt-api.svg" alt="license">
@@ -22,7 +22,7 @@ _✨ ChatGPT API 交互插件 ✨_
 
 ## 📖 介绍
 
-通过调用 OpenAI API 进行多轮对话、图像生成等任务，支持 ChatGPT、Genimi、DeepSeek 等多个模型。基于 `nonebot-plugin-chatgpt` 插件进行修改和扩展，提供更高效的 API 调用和自定义配置。
+通过调用 OpenAI API 接口进行多轮对话、图像生成等任务，支持 ChatGPT、Genimi、DeepSeek 等多个模型。基于 `nonebot-plugin-chatgpt` 插件进行修改和扩展，提供更高效的 API 调用和自定义配置。
 
 ## 💿 安装
 
