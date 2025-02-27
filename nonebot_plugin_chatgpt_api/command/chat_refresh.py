@@ -1,6 +1,5 @@
 from typing import Any, AsyncGenerator
 
-from nonebot import Bot
 from nonebot.adapters import Event
 from nonebot.internal.matcher import Matcher
 from nonebot.internal.params import Depends

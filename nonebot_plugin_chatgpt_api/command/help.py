@@ -1,5 +1,4 @@
 from nonebot.plugin.on import on_command
-from nonebot_plugin_saa import MessageFactory, Text
 
 __all__ = ["HELP_TEXT", "matcher_help"]
 
