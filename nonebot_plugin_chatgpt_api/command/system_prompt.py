@@ -59,7 +59,7 @@ async def finish_system_prompt_timeout(user_id, event, matcher, bot, respond=Tru
     await matcher.finish()
     remove_system_prompt_timeout(user_id)
     if respond:
-        response_content = f"超过{PLUGIN_CONFIG.chatgpt_timeout_time_setting}分钟无响应，已自动退出提示词设置！"
+        response_content = f"超过{PLUGIN_CONFIG.chatgpt_timeout_time_setting}分钟，已自动退出提示词设置！"
         await bot.send(event, response_content, at_sender=True)
 
 
@@ -137,12 +137,12 @@ async def handle_system_prompt(event: Event, state: T_State, matcher: Matcher, b
                 matcher.set_arg("content", message_type(" ".join(extracted_user_content[1:])))
         else:
             # matcher.set_arg("content", None)
-            await matcher.reject(f"\"{mode}\"为无效命令，请重新输入！\n1.查看\n2.重置\n3.更新\n输入\"退出\"来退出提示词设置。", at_sender=True)
+            await matcher.reject(f"\"{mode}\"命令无效，请重新输入！\n1.查看\n2.重置\n3.更新\n输入\"退出\"离开提示词设置。", at_sender=True)
 
 
 @matcher_system_prompt.enhanced_got(
     "mode",
-    prompt=f"请选择你要进行的操作：\n1.查看\n2.重置\n3.更新\n输入\"退出\"来退出提示词设置。",
+    prompt=f"请选择操作：\n1.查看\n2.重置\n3.更新\n输入\"退出\"离开提示词设置。",
     at_sender=True,
 )
 async def dispatch_system_prompt_operations(event: Event, matcher: Matcher, bot: Bot, mode: str = ArgPlainText()):
@@ -170,7 +170,7 @@ async def dispatch_system_prompt_operations(event: Event, matcher: Matcher, bot:
         # "提示词"
         # get the `mode` variable from `matcher.got()` function
         add_system_prompt_timeout(user_id, bot, event, matcher, minutes=PLUGIN_CONFIG.chatgpt_timeout_time_setting, respond=PLUGIN_CONFIG.chatgpt_timeout_respond)  # reset the scheduler
-        await matcher.reject(f"请选择你要进行的操作：\n1.查看\n2.重置\n3.更新\n输入\"退出\"来退出提示词设置。", at_sender=True)
+        await matcher.reject(f"请选择操作：\n1.查看\n2.重置\n3.更新\n输入\"退出\"离开提示词设置。", at_sender=True)
     else:
         if mode == "查看":
             remove_system_prompt_timeout(user_id)
@@ -178,14 +178,14 @@ async def dispatch_system_prompt_operations(event: Event, matcher: Matcher, bot:
             if system_prompt == "":
                 await matcher.finish("你还没有设置提示词哦！", at_sender=True)
             else:
-                await matcher.finish(f"你当前的提示词为：\n\"{system_prompt}\"", at_sender=True)
+                await matcher.finish(f"当前提示词：\n\"{system_prompt}\"", at_sender=True)
         elif mode == "重置":
             remove_system_prompt_timeout(user_id)
             chatgpt = get_chatgpt(user_id)
             chatgpt.set_system_prompt(system_prompt="", reset_history=True)
             if PLUGIN_CONFIG.chatgpt_log_system_prompt:
                 save_system_prompt_to_csv(user_id, "")
-            await matcher.finish("你的提示词已重置！", at_sender=True)
+            await matcher.finish("提示词已重置！", at_sender=True)
         elif mode == "更新":
             # handle by the `update_system_prompt` function
             add_system_prompt_timeout(user_id, bot, event, matcher, minutes=PLUGIN_CONFIG.chatgpt_timeout_time_setting, respond=PLUGIN_CONFIG.chatgpt_timeout_respond)  # reset the scheduler
@@ -194,12 +194,12 @@ async def dispatch_system_prompt_operations(event: Event, matcher: Matcher, bot:
             await matcher.finish("已退出提示词设置！", at_sender=True)
         else:
             add_system_prompt_timeout(user_id, bot, event, matcher, minutes=PLUGIN_CONFIG.chatgpt_timeout_time_setting, respond=PLUGIN_CONFIG.chatgpt_timeout_respond)  # reset the scheduler
-            await matcher.reject(f"\"{mode}\"为无效命令，请重新输入！\n1.查看\n2.重置\n3.更新\n输入\"退出\"来退出提示词设置。", at_sender=True)
+            await matcher.reject(f"\"{mode}\"为无效命令，请重新输入！\n1.查看\n2.重置\n3.更新\n输入\"退出\"离开提示词设置。", at_sender=True)
 
 
 @matcher_system_prompt.enhanced_got(
     "content",
-    prompt=f"请输入更新后的提示词，或输入\"退出\"来退出提示词设置！",
+    prompt=f"请输入更新后的提示词，或输入\"退出\"离开提示词设置！",
     at_sender=True,
 )
 async def update_system_prompt(event: Event, matcher: Matcher, content: str = ArgPlainText()):
@@ -225,7 +225,7 @@ async def update_system_prompt(event: Event, matcher: Matcher, content: str = Ar
     # if extracted_content[0] == "更新":
     #     extracted_content = extracted_content[1:]  # 内容
     # if len(extracted_content) > 0:
-    #     matcher.reject(f"请输入更新后的提示词，或输入\"退出\"来退出提示词设置！", at_sender=True)
+    #     matcher.reject(f"请输入更新后的提示词，或输入\"退出\"离开提示词设置！", at_sender=True)
     # else:
     #     content = extracted_content[0]
     # logger.debug(f"User \"{user_id}\" extracted `content`: {content}")

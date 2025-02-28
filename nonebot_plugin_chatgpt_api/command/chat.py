@@ -66,7 +66,7 @@ async def finish_chat_timeout(user_id, event, matcher, bot, respond=True):
     remove_chat_timeout(user_id)
     if respond:
         response_content = (f"距离上轮对话已超过{PLUGIN_CONFIG.chatgpt_timeout_time_chat}分钟，{PLUGIN_CONFIG.chatgpt_bot_name}自动结束啦！\n"
-                            f"如需恢复对话，请使用指令\"@bot 恢复\"")
+                            f"如需恢复对话，请使用指令\"@bot 恢复\"。")
         await bot.send(event, response_content, at_sender=True)
 
 

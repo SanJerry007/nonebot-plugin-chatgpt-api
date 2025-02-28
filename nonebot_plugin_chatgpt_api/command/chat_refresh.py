@@ -59,4 +59,4 @@ async def handle_system_prompt(event: Event, matcher: Matcher) -> None:
     chatgpt = get_chatgpt(user_id)
     chatgpt.reset_chat_history()
 
-    await matcher.finish(f"对话已刷新", at_sender=True)
+    await matcher.finish(f"对话已刷新！", at_sender=True)

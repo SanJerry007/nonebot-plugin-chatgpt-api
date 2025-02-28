@@ -66,8 +66,8 @@ async def handle_system_prompt(event: Event, matcher: Matcher, bot: Bot) -> None
     add_chat_timeout(user_id, event, matcher, bot, minutes=PLUGIN_CONFIG.chatgpt_timeout_time_chat, respond=PLUGIN_CONFIG.chatgpt_timeout_respond)
 
     if chat_history is None:
-        await matcher.finish(f"无可恢复的对话历史", at_sender=True)
+        await matcher.finish(f"无可恢复的历史对话", at_sender=True)
     else:
         chatgpt.set_chat_history(chat_history)
         last_round_content = f"[用户]\n{chat_history[-2]['content']}\n[{PLUGIN_CONFIG.chatgpt_bot_name}]\n{chat_history[-1]['content']}"
-        await matcher.finish(f"对话已恢复，最后一轮对话如下：\n{last_round_content}", at_sender=True)
+        await matcher.finish(f"对话恢复成功：\n{last_round_content}", at_sender=True)
