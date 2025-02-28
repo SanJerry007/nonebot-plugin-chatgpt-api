@@ -16,7 +16,7 @@ _✨ ChatGPT (OpenAI API 接口版) ✨_
 <a href="https://pypi.python.org/pypi/nonebot-plugin-chatgpt-api">
     <img src="https://img.shields.io/pypi/v/nonebot-plugin-chatgpt-api.svg" alt="pypi">
 </a>
-<img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="python">
+<img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="python">
 
 </div>
 
