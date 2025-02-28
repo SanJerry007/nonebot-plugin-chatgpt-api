@@ -10,7 +10,7 @@ from nonebot.rule import startswith, to_me
 from nonebot.typing import T_State
 
 from .chat import add_chat_timeout
-from ..chatgpt_api import get_chatgpt
+from ..chatgpt_api import ChatGPT, get_chatgpt
 from ..config import NONEBOT_CONFIG, PLUGIN_CONFIG
 from ..data_storage import get_latest_chat_history
 from ..rule import notstartswith
@@ -59,7 +59,7 @@ async def handle_system_prompt(event: Event, matcher: Matcher, bot: Bot) -> None
         user_id = "GLOBAL"
 
     # prepare the chatgpt
-    chatgpt = get_chatgpt(user_id)
+    chatgpt: ChatGPT = get_chatgpt(user_id)
     chat_history = get_latest_chat_history(user_id)
 
     # reset the scheduler for chat

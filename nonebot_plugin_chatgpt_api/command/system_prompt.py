@@ -11,7 +11,7 @@ from nonebot.rule import startswith, to_me
 from nonebot.typing import T_State
 from nonebot_plugin_apscheduler import scheduler
 
-from ..chatgpt_api import get_chatgpt
+from ..chatgpt_api import ChatGPT, get_chatgpt
 from ..config import NONEBOT_CONFIG, PLUGIN_CONFIG
 from ..data_storage import get_latest_system_prompt, save_system_prompt_to_csv
 from ..rule import notstartswith
@@ -181,7 +181,7 @@ async def dispatch_system_prompt_operations(event: Event, matcher: Matcher, bot:
                 await matcher.finish(f"当前提示词：\n\"{system_prompt}\"", at_sender=True)
         elif mode == "重置":
             remove_system_prompt_timeout(user_id)
-            chatgpt = get_chatgpt(user_id)
+            chatgpt: ChatGPT = get_chatgpt(user_id)
             chatgpt.set_system_prompt(system_prompt="", reset_history=True)
             if PLUGIN_CONFIG.chatgpt_log_system_prompt:
                 save_system_prompt_to_csv(user_id, "")
@@ -237,7 +237,7 @@ async def update_system_prompt(event: Event, matcher: Matcher, content: str = Ar
     if content == "退出":
         await matcher.finish("已退出提示词设置！", at_sender=True)
     else:
-        chatgpt = get_chatgpt(user_id)
+        chatgpt: ChatGPT = get_chatgpt(user_id)
         chatgpt.set_system_prompt(system_prompt=content, reset_history=True)
         if PLUGIN_CONFIG.chatgpt_log_system_prompt:
             save_system_prompt_to_csv(user_id, content)

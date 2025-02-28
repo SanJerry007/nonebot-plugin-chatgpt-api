@@ -8,7 +8,7 @@ from nonebot.plugin.on import on_message
 from nonebot.rule import startswith, to_me
 from nonebot.typing import T_State
 
-from ..chatgpt_api import get_chatgpt
+from ..chatgpt_api import ChatGPT, get_chatgpt
 from ..config import NONEBOT_CONFIG
 from ..rule import notstartswith
 
@@ -56,7 +56,7 @@ async def handle_system_prompt(event: Event, matcher: Matcher) -> None:
         user_id = "GLOBAL"
 
     # prepare the chatgpt
-    chatgpt = get_chatgpt(user_id)
+    chatgpt: ChatGPT = get_chatgpt(user_id)
     chatgpt.reset_chat_history()
 
     await matcher.finish(f"对话已刷新！", at_sender=True)

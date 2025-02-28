@@ -14,7 +14,7 @@ from nonebot.typing import T_State
 from nonebot_plugin_apscheduler import scheduler
 from nonebot_plugin_htmlrender import md_to_pic
 
-from ..chatgpt_api import get_chatgpt
+from ..chatgpt_api import ChatGPT, get_chatgpt
 from ..config import NONEBOT_CONFIG, PLUGIN_CONFIG
 from ..data_storage import save_api_call_stat_to_jsonl, save_chat_history_to_jsonl
 from ..rule import notstartswith
@@ -60,7 +60,7 @@ def remove_chat_timeout(user_id):
 
 async def finish_chat_timeout(user_id, event, matcher, bot, respond=True):
     """`对话`命令超时后的处理函数"""
-    chatgpt = get_chatgpt(user_id)
+    chatgpt: ChatGPT = get_chatgpt(user_id)
     chatgpt.reset_chat_history()
     matcher.finish()
     remove_chat_timeout(user_id)
@@ -135,7 +135,7 @@ async def handle_chat(event: Event, state: T_State, matcher: Matcher, bot: Bot) 
     logger.info(f"User \"{user_id}\": {user_content}")
 
     # prepare the chatgpt
-    chatgpt = get_chatgpt(user_id)
+    chatgpt: ChatGPT = get_chatgpt(user_id)
 
     # get response content
     LAST_RESPONDED[user_id] = False
@@ -160,7 +160,8 @@ async def handle_chat(event: Event, state: T_State, matcher: Matcher, bot: Bot) 
         save_api_call_stat_to_jsonl(user_id, stat)
 
     # set a scheduler that ends the chat when timeout
-    add_chat_timeout(user_id, event, matcher, bot, minutes=PLUGIN_CONFIG.chatgpt_timeout_time_chat, respond=PLUGIN_CONFIG.chatgpt_timeout_respond)
+    if len(chatgpt.chat_history) > 0:
+        add_chat_timeout(user_id, event, matcher, bot, minutes=PLUGIN_CONFIG.chatgpt_timeout_time_chat, respond=PLUGIN_CONFIG.chatgpt_timeout_respond)
 
     if not PLUGIN_CONFIG.chatgpt_return_image:
         await matcher_chat.finish(response_content, at_sender=True)
