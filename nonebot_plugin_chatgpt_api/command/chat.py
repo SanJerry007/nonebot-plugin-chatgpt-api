@@ -70,7 +70,7 @@ async def finish_chat_timeout(user_id, event, matcher, bot, respond=True):
         await bot.send(event, response_content, at_sender=True)
 
 
-LAST_TIME: Dict[Hashable, datetime.datetime] = {}
+LAST_TIME: Dict[Hashable, datetime.datetime] = {}  # 用户上次对话的发送时间
 
 
 def cooldown_checker(cd_time: datetime.timedelta) -> Any:
@@ -81,9 +81,6 @@ def cooldown_checker(cd_time: datetime.timedelta) -> Any:
             user_id = event.get_user_id()
         else:
             user_id = "GLOBAL"
-
-        logger.debug(str(event))
-        yield
 
         if user_id not in LAST_TIME:
             LAST_TIME[user_id] = datetime.datetime.now()

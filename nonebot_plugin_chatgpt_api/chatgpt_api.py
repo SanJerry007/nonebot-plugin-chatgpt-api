@@ -144,5 +144,5 @@ def get_chatgpt(user_id: str) -> ChatGPT:
                      f"chat_history={chatgpt.chat_history}")
     else:
         chatgpt = ALL_CHATGPTS[user_id]
-        logger.debug(f"[ChatGPT] Used by user \"{user_id}\"")
+        logger.debug(f"[ChatGPT] Called by user \"{user_id}\"")
     return chatgpt
