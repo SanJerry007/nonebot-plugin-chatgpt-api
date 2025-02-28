@@ -65,7 +65,7 @@ def get_latest_system_prompt(user_id: str) -> str:
 def save_chat_history_to_jsonl(user_id: str, chat_history: List[Dict[str, str]], create_new_file=False):
     """添加聊天历史记录到 JSONL 文件"""
     now_date = time.strftime('%Y-%m-%d')
-    now_time = time.strftime('%Y%m%d-%H%M%S')  # don't use ":" as windows doesn't support it
+    now_time = time.strftime('%Y%m%d-%H%M%S')  # don't use ":" in case running on Windows
     save_dir = os.path.join(PLUGIN_CONFIG.chatgpt_log_path, "chat_histories", user_id, f"{now_date}")
 
     # get the target file to save
