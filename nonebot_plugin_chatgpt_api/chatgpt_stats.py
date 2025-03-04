@@ -87,7 +87,7 @@ def get_model_pricing(model):
 
 
 def get_number_of_tokens(usage):
-    cached_tokens = usage.prompt_tokens_details.cached_tokens
+    cached_tokens = usage.model_extra.get("prompt_tokens_details", {}).get("cached_tokens", 0)
     if cached_tokens is None:
         cached_tokens = 0
     prompt_tokens = usage.prompt_tokens - cached_tokens

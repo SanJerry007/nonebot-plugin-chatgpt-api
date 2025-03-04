@@ -1,5 +1,9 @@
 # 更新日志
 
+### v1.1.6 (latest)
+
+- 修复了使用不同模型接口时，潜在的 `cached_tokens` 统计错误问题。
+
 ### v1.1.5
 
 - 全面规范化了代码，以符合 [NoneBot](https://github.com/nonebot/nonebot2/issues/3339) 发布标准。
