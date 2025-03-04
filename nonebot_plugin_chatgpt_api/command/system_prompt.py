@@ -5,7 +5,7 @@ from nonebot.adapters import Event
 from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.params import ArgPlainText, Depends, _command_arg
-from nonebot.plugin.on import on_message
+from nonebot.plugin import on_message
 from nonebot.rule import startswith, to_me
 from nonebot.typing import T_State
 from nonebot_plugin_apscheduler import scheduler

@@ -3,7 +3,7 @@ from typing import Any, AsyncGenerator
 from nonebot.adapters import Event
 from nonebot.matcher import Matcher
 from nonebot.params import Depends, _command_arg
-from nonebot.plugin.on import on_message
+from nonebot.plugin import on_message
 from nonebot.rule import startswith, to_me
 from nonebot.typing import T_State
 

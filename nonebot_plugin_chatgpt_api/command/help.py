@@ -1,4 +1,4 @@
-from nonebot.plugin.on import on_command
+from nonebot.plugin import on_command
 
 __all__ = ["HELP_TEXT", "matcher_help"]
 
