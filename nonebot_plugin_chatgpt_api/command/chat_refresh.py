@@ -7,6 +7,7 @@ from nonebot.plugin import on_message
 from nonebot.rule import startswith, to_me
 from nonebot.typing import T_State
 
+from .chat import remove_chat_timeout
 from ..chatgpt_api import ChatGPT, get_chatgpt
 from ..config import NONEBOT_CONFIG
 from ..rule import notstartswith
@@ -57,5 +58,8 @@ async def handle_system_prompt(event: Event, matcher: Matcher) -> None:
     # prepare the chatgpt
     chatgpt: ChatGPT = get_chatgpt(user_id)
     chatgpt.reset_chat_history()
+
+    # remove the scheduler for chat
+    remove_chat_timeout(user_id)
 
     await matcher.finish(f"对话已刷新！", at_sender=True)
