@@ -7,7 +7,7 @@ require("nonebot_plugin_htmlrender")
 
 from .matcher import *  # must import this to enable `matcher.enhanced_got()`
 from .command import *
-from .config import ChatGPTConfig
+from .config import ChatGPTAPIConfig
 
 __plugin_meta__ = PluginMetadata(
     name="ChatGPT (OpenAI API 接口版)",
@@ -15,7 +15,7 @@ __plugin_meta__ = PluginMetadata(
     usage="@bot [内容]",
     type="application",
     homepage="https://github.com/SanJerry007/nonebot-plugin-chatgpt-api",
-    config=ChatGPTConfig,
+    config=ChatGPTAPIConfig,
     supported_adapters={
         "~onebot.v11",
         "~onebot.v12",

@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from .utils import load_json
 
 
-class ChatGPTConfig(BaseModel):
+class ChatGPTAPIConfig(BaseModel):
     chatgpt_bot_name: str = "ChatGPT"  # 机器人的名称，在一些特定的回复中会用到
     chatgpt_model: str = "gpt-4o"
     chatgpt_api_key: str = None
@@ -50,6 +50,6 @@ class ChatGPTConfig(BaseModel):
 
 
 NONEBOT_CONFIG = get_driver().config
-PLUGIN_CONFIG = get_plugin_config(ChatGPTConfig)
+PLUGIN_CONFIG = get_plugin_config(ChatGPTAPIConfig)
 PLUGIN_CONFIG.post_init()
 logger.info(PLUGIN_CONFIG)
