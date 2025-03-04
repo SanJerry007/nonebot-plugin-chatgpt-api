@@ -85,14 +85,22 @@ def cooldown_checker(cd_time: datetime.timedelta) -> Any:
             LAST_TIME[user_id] = datetime.datetime.now()
             logger.debug(f"[Cooldown] User \"{user_id}\" (Newly created): last_time={LAST_TIME[user_id]}")
         else:
-            event_time = datetime.datetime.fromtimestamp(event.time)
-            cooldown_time = LAST_TIME[user_id] + cd_time
-            logger.debug(f"[Cooldown] User \"{user_id}\": last_time={LAST_TIME[user_id]}, event_time={event_time}, cooldown_time={cooldown_time}, cd_time={cd_time}")
-
-            if event_time < cooldown_time:
-                await matcher.finish(f"{PLUGIN_CONFIG.chatgpt_bot_name}冷却中，剩余{(cooldown_time - event_time).total_seconds():.0f}秒", at_sender=True)
+            if isinstance(event.time, datetime.datetime):  # Console Adapter
+                event_time = event.time
+            elif isinstance(event.time, int):  # OneBot Adapter
+                event_time = datetime.datetime.fromtimestamp(event.time)
             else:
-                LAST_TIME[user_id] = event_time
+                event_time = None
+                logger.debug(f"[Cooldown] Unknown event time type: {type(event.time)}, skip cooldown check.")
+
+            if event_time is not None:
+                cooldown_time = LAST_TIME[user_id] + cd_time
+                logger.debug(f"[Cooldown] User \"{user_id}\": last_time={LAST_TIME[user_id]}, event_time={event_time}, cooldown_time={cooldown_time}, cd_time={cd_time}")
+
+                if event_time < cooldown_time:
+                    await matcher.finish(f"{PLUGIN_CONFIG.chatgpt_bot_name}冷却中，剩余{(cooldown_time - event_time).total_seconds():.0f}秒", at_sender=True)
+                else:
+                    LAST_TIME[user_id] = event_time
         yield
 
     return Depends(check_cooldown)
