@@ -1,6 +1,6 @@
 queue_rules:
   - name: default
-    conditions: []
+    conditions: [ ]
 
 pull_request_rules:
   - name: 合并后删除分支
@@ -41,11 +41,11 @@ pull_request_rules:
   - name: CI 静态分析失败
     conditions:
       - or:
-        - "check-failure=DeepSource: Python"
-        - "check-failure=Codacy Static Code Analysis"
+          - "check-failure=DeepSource: Python"
+          - "check-failure=Codacy Static Code Analysis"
     actions:
-        comment:
-          message: "@{{author}} 这个拉取请求中存在代码质量问题, 请查看状态检查中的详细报告并修复问题"
+      comment:
+        message: "@{{author}} 这个拉取请求中存在代码质量问题, 请查看状态检查中的详细报告并修复问题"
 
   - name: 所有者添加批准标签后加入合并队列
     conditions:
@@ -61,10 +61,10 @@ pull_request_rules:
       - "#review-requested=0"
       - "#changes-requested-reviews-by=0"
       - or:
-        - author=A-kirami
-        - and:
-          - author!=A-kirami
-          - approved-reviews-by=A-kirami
+          - author=A-kirami
+          - and:
+              - author!=A-kirami
+              - approved-reviews-by=A-kirami
     actions:
       queue:
         name: default
@@ -86,11 +86,11 @@ pull_request_rules:
     conditions:
       - conflict
     actions:
-        comment:
-          message: "@{{author}} 这个 PR 中发生了冲突, 请解决此冲突"
-        label:
-          add:
-            - conflict
+      comment:
+        message: "@{{author}} 这个 PR 中发生了冲突, 请解决此冲突"
+      label:
+        add:
+          - conflict
 
   - name: 解决冲突后移除 conflict 标签
     conditions:
