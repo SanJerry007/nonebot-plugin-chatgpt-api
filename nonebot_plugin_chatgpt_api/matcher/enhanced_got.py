@@ -1,15 +1,10 @@
 from typing import Any, Callable, Iterable, Optional, Union
 
-from nonebot.adapters import Event
+from nonebot.adapters import Event, Message, MessageSegment, MessageTemplate
 from nonebot.consts import ARG_KEY
 from nonebot.dependencies import Dependent
-from nonebot.internal.adapter import (
-    Message,
-    MessageSegment,
-    MessageTemplate,
-)
-from nonebot.internal.matcher import Matcher
-from nonebot.internal.params import Depends
+from nonebot.matcher import Matcher
+from nonebot.params import Depends
 from nonebot.typing import T_Handler
 
 
@@ -21,7 +16,7 @@ def enhanced_got(
     **kwargs,
 ) -> Callable[[T_Handler], T_Handler]:
     """
-    由`nonebot.internal.matcher.Matcher.got()`修改，添加了reject的发送的kwargs。
+    由`nonebot.matcher.Matcher.got()`修改，添加了reject的发送的kwargs。
 
     当要获取的 `key` 不存在时接收用户新的一条消息再运行该函数，
     如果 `key` 已存在则直接继续运行

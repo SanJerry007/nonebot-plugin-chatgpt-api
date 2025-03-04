@@ -2,7 +2,7 @@ import re
 from typing import Union
 
 from nonebot.adapters import Event
-from nonebot.internal.rule import Rule as Rule
+from nonebot.rule import Rule as Rule
 from nonebot.typing import T_State
 
 

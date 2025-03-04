@@ -4,10 +4,9 @@ from typing import Any, AsyncGenerator, Dict
 
 from nonebot import Bot
 from nonebot.adapters import Event, MessageSegment
-from nonebot.internal.params import Depends
 from nonebot.log import logger
 from nonebot.matcher import Matcher
-from nonebot.params import _command_arg
+from nonebot.params import Depends, _command_arg
 from nonebot.plugin.on import on_message
 from nonebot.rule import to_me
 from nonebot.typing import T_State

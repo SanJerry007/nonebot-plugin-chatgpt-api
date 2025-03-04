@@ -4,8 +4,8 @@ from nonebot.plugin import PluginMetadata
 require("nonebot_plugin_apscheduler")
 require("nonebot_plugin_htmlrender")
 
-from .matcher import *  # must import this to enable `matcher.enhanced_got()`
-from .command import *
+import matcher  # must import this to enable `matcher.enhanced_got()`
+import command
 from .config import ChatGPTConfig
 
 __plugin_meta__ = PluginMetadata(

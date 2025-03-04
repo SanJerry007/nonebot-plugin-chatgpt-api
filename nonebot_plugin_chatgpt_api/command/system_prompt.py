@@ -2,10 +2,9 @@ from typing import Any, AsyncGenerator
 
 from nonebot import Bot
 from nonebot.adapters import Event
-from nonebot.internal.matcher import Matcher
-from nonebot.internal.params import ArgPlainText, Depends
 from nonebot.log import logger
-from nonebot.params import _command_arg
+from nonebot.matcher import Matcher
+from nonebot.params import ArgPlainText, Depends, _command_arg
 from nonebot.plugin.on import on_message
 from nonebot.rule import startswith, to_me
 from nonebot.typing import T_State
