@@ -1,6 +1,10 @@
 # 更新日志
 
-### v1.1.4 (latest)
+### v1.1.5 (latest)
+
+- 全面规范化了代码，以符合 [NoneBot](https://github.com/nonebot/nonebot2/issues/3339) 发布标准。
+
+### v1.1.4
 
 - 移除了在无对话内容时，被错误添加的超时判断。
 - 修复了失效的对话冷却时间判断。

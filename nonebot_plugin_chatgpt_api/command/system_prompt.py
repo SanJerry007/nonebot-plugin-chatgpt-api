@@ -3,9 +3,7 @@ from typing import Any, AsyncGenerator
 from nonebot import Bot
 from nonebot.adapters import Event
 from nonebot.log import logger
-from nonebot.matcher import Matcher
 from nonebot.params import ArgPlainText, Depends, _command_arg
-from nonebot.plugin import on_message
 from nonebot.rule import startswith, to_me
 from nonebot.typing import T_State
 from nonebot_plugin_apscheduler import scheduler
@@ -13,12 +11,13 @@ from nonebot_plugin_apscheduler import scheduler
 from ..chatgpt_api import ChatGPT, get_chatgpt
 from ..config import NONEBOT_CONFIG, PLUGIN_CONFIG
 from ..data_storage import get_latest_system_prompt, save_system_prompt_to_csv
+from ..matcher import enhanced_on_message, EnhancedMatcher
 from ..rule import notstartswith
 from ..scheduled_jobs import add_to_timeout_job_storage, remove_from_timeout_job_storage
 
 __all__ = ["matcher_system_prompt"]
 
-matcher_system_prompt = on_message(
+matcher_system_prompt = enhanced_on_message(
     rule=to_me() & startswith("提示词") & notstartswith(tuple(NONEBOT_CONFIG.command_start)),
     permission=None,  # GROUP
     block=False,
@@ -73,7 +72,7 @@ def system_prompt_command_checker() -> Any:
         @bot 提示词是什么？请给我一个例子。
     """
 
-    async def check_command(event: Event, state: T_State, matcher: Matcher) -> AsyncGenerator[None, None]:
+    async def check_command(event: Event, state: T_State, matcher: EnhancedMatcher) -> AsyncGenerator[None, None]:
         # extract user input
         message = _command_arg(state) or event.get_message()
         user_content = message.extract_plain_text().strip()
@@ -90,7 +89,7 @@ def system_prompt_command_checker() -> Any:
 
 
 @matcher_system_prompt.handle(parameterless=[system_prompt_command_checker()])
-async def handle_system_prompt(event: Event, state: T_State, matcher: Matcher, bot: Bot) -> None:
+async def handle_system_prompt(event: Event, state: T_State, matcher: EnhancedMatcher, bot: Bot) -> None:
     """系统提示词相关逻辑"""
     if hasattr(event, "user_id"):
         user_id = event.get_user_id()
@@ -139,12 +138,12 @@ async def handle_system_prompt(event: Event, state: T_State, matcher: Matcher, b
             await matcher.reject(f"\"{mode}\"命令无效，请重新输入！\n1.查看\n2.重置\n3.更新\n输入\"退出\"离开提示词设置。", at_sender=True)
 
 
-@matcher_system_prompt.enhanced_got(
+@matcher_system_prompt.got(
     "mode",
     prompt=f"请选择操作：\n1.查看\n2.重置\n3.更新\n输入\"退出\"离开提示词设置。",
     at_sender=True,
 )
-async def dispatch_system_prompt_operations(event: Event, matcher: Matcher, bot: Bot, mode: str = ArgPlainText()):
+async def dispatch_system_prompt_operations(event: Event, matcher: EnhancedMatcher, bot: Bot, mode: str = ArgPlainText()):
     """
     选择具体的提示词指令，由`@bot 提示词`命令触发。
     """
@@ -196,12 +195,12 @@ async def dispatch_system_prompt_operations(event: Event, matcher: Matcher, bot:
             await matcher.reject(f"\"{mode}\"为无效命令，请重新输入！\n1.查看\n2.重置\n3.更新\n输入\"退出\"离开提示词设置。", at_sender=True)
 
 
-@matcher_system_prompt.enhanced_got(
+@matcher_system_prompt.got(
     "content",
     prompt=f"请输入更新后的提示词，或输入\"退出\"离开提示词设置！",
     at_sender=True,
 )
-async def update_system_prompt(event: Event, matcher: Matcher, content: str = ArgPlainText()):
+async def update_system_prompt(event: Event, matcher: EnhancedMatcher, content: str = ArgPlainText()):
     """
     更新提示词内容，由`@bot 提示词 更新`命令触发。
     """
