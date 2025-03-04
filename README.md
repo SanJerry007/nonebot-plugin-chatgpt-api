@@ -89,7 +89,8 @@ _✨ ChatGPT (OpenAI API 接口版) ✨_
 |    chatgpt_log_api_stats     | 否  |       True       |    是否保存 API 调用统计信息日志    |
 |  chatgpt_log_system_prompt   | 否  |       True       |      是否保存系统提示词历史日志      |
 |   chatgpt_log_chat_history   | 否  |       True       |       是否保存对话历史日志        |
-|       chatgpt_log_path       | 否  | ~/.cache/nonebot |         日志保存路径          |
+
+如果要更改日志保存路径，请在 `.env` 文件中额外设置 `LOCALSTORE_CACHE_DIR`，默认路径请参考[此处](https://github.com/nonebot/plugin-localstore?tab=readme-ov-file#cache-path)。
 
 ## 🎉 使用
 

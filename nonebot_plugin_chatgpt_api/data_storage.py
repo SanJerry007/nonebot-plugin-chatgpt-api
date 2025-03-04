@@ -3,16 +3,20 @@ import os.path
 import time
 from typing import Any, Dict, List, Optional
 
+import nonebot_plugin_localstore as store
 import pandas as pd
 from nonebot.log import logger
 
 from .config import PLUGIN_CONFIG
 from .utils import create_dir, find_files, load_jsonl
 
+CHATGPT_LOG_PATH: str = store.get_plugin_cache_dir().as_posix()
+logger.info(f"ChatGPT cache will saved to \"{CHATGPT_LOG_PATH}\"")
+
 
 def save_api_call_stat_to_jsonl(user_id: str, stat: Dict[str, Any]):
     """添加 API 调用统计信息到 JSONL 文件"""
-    save_dir = os.path.join(PLUGIN_CONFIG.chatgpt_log_path, "api_call_stats", user_id)
+    save_dir = os.path.join(CHATGPT_LOG_PATH, "api_call_stats", user_id)
     save_file = os.path.join(save_dir, f"{time.strftime('%Y-%m-%d')}.jsonl")
 
     create_dir(save_dir)
@@ -25,7 +29,7 @@ def save_api_call_stat_to_jsonl(user_id: str, stat: Dict[str, Any]):
 def save_system_prompt_to_csv(user_id: str, system_prompt: str):
     """添加系统提示词到 CSV 文件"""
     now_timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-    save_dir = os.path.join(PLUGIN_CONFIG.chatgpt_log_path, "system_prompts")
+    save_dir = os.path.join(CHATGPT_LOG_PATH, "system_prompts")
     save_file = os.path.join(save_dir, f"{user_id}.csv")
 
     create_dir(save_dir)
@@ -46,9 +50,9 @@ def save_system_prompt_to_csv(user_id: str, system_prompt: str):
 
 def get_latest_system_prompt(user_id: str) -> str:
     """获取最新的系统提示词"""
-    save_file = os.path.join(PLUGIN_CONFIG.chatgpt_log_path, "system_prompts", f"{user_id}.csv")
+    save_file = os.path.join(CHATGPT_LOG_PATH, "system_prompts", f"{user_id}.csv")
 
-    if not os.path.exists(save_file):  # initialize system prompt file
+    if not os.path.exists(save_file):  # initialize the system prompt file
         system_prompt = ""
         if PLUGIN_CONFIG.chatgpt_log_system_prompt:
             save_system_prompt_to_csv(user_id, system_prompt)
@@ -66,7 +70,7 @@ def save_chat_history_to_jsonl(user_id: str, chat_history: List[Dict[str, str]],
     """添加聊天历史记录到 JSONL 文件"""
     now_date = time.strftime('%Y-%m-%d')
     now_time = time.strftime('%Y%m%d-%H%M%S')  # don't use ":" in case running on Windows
-    save_dir = os.path.join(PLUGIN_CONFIG.chatgpt_log_path, "chat_histories", user_id, f"{now_date}")
+    save_dir = os.path.join(CHATGPT_LOG_PATH, "chat_histories", user_id, f"{now_date}")
 
     # get the target file to save
     if create_new_file:
@@ -88,7 +92,7 @@ def save_chat_history_to_jsonl(user_id: str, chat_history: List[Dict[str, str]],
 
 def get_latest_chat_history(user_id: str) -> Optional[List[Dict[str, str]]]:
     """获取最新的聊天历史记录"""
-    save_dir = os.path.join(PLUGIN_CONFIG.chatgpt_log_path, "chat_histories", user_id)  # here
+    save_dir = os.path.join(CHATGPT_LOG_PATH, "chat_histories", user_id)  # here
     all_files = sorted(find_files(save_dir, "*.jsonl"))
     if len(all_files) == 0:
         logger.debug(f"Get no chat history from {save_dir}")

@@ -28,7 +28,6 @@ class ChatGPTConfig(BaseModel):
     chatgpt_log_api_stats: bool = True  # 是否保存`API调用统计信息`到文件
     chatgpt_log_system_prompt: bool = True  # 是否保存`系统提示词历史`到文件（若关闭则每次重启bot后，用户都要手动设置提示词）
     chatgpt_log_chat_history: bool = True  # 是否保存`对话历史`到文件（若关闭则无法恢复上次对话）
-    chatgpt_log_path: str = "~/.cache/nonebot"  # 上述日志的保存路径
 
     def post_init(self):
         if self.chatgpt_cd_time <= 0:

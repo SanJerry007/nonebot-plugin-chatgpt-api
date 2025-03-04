@@ -3,6 +3,7 @@
 ### v1.1.5 (latest)
 
 - 全面规范化了代码，以符合 [NoneBot](https://github.com/nonebot/nonebot2/issues/3339) 发布标准。
+- 数据存储迁移至 NoneBot 官方 `localstore` 插件。
 
 ### v1.1.4
 
