@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# nonebot-plugin-chatgpt-api
+# Nonebot Plugin Chatgpt Api
 
 _✨ ChatGPT (OpenAI API 接口版) ✨_
 
