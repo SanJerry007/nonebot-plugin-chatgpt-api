@@ -16,4 +16,9 @@ __plugin_meta__ = PluginMetadata(
     type="application",
     homepage="https://github.com/SanJerry007/nonebot-plugin-chatgpt-api",
     config=ChatGPTConfig,
+    supported_adapters={
+        "~onebot.v11",
+        "~onebot.v12",
+        "~console",
+    },
 )
