@@ -86,7 +86,6 @@ MODEL_PRICING = {
 }
 
 
-
 def get_model_pricing(model):
     if model not in MODEL_PRICING:
         logger.info(f"Model \"{model}\" not found in pricing table, skip price calculation")
